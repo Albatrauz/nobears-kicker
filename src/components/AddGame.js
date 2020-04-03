@@ -2,7 +2,6 @@ import React from "react";
 import firebase from "../firebase";
 
 class AddGame extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -19,6 +18,10 @@ class AddGame extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.getTotalMatches();
+    }
+
     //Create refs
     playerOneName = React.createRef();
     playerOneScore = React.createRef();
@@ -27,11 +30,8 @@ class AddGame extends React.Component {
 
     getTotalMatches = () => {
         let id = 0;
-        const matchesRef = firebase
-            .database()
-            .ref("matches")
-            .orderByKey();
-        matchesRef.once("value").then(match => {
+        const matchesRef = firebase.database().ref("matches").orderByKey();
+        matchesRef.once("value").then((match) => {
             match.forEach(() => {
                 id++;
             });
@@ -41,39 +41,11 @@ class AddGame extends React.Component {
                 match: {
                     //Take a copy of the state set in constructor
                     ...this.state.match,
-                    matchID: matchId
-                }
+                    matchID: matchId,
+                },
             });
         });
     };
-
-    addGame = () => {
-        const match = this.state.match
-        const matchTime = Date.now();
-        const matchesRef = firebase.database().ref("matches");
-        matchesRef.child(matchTime).set(match);
-        this.getTotalMatches();
-    };
-
-    setWinner = match => {
-        this.setState(
-            {
-                match: {
-                    ...this.state.match,
-                    winner:
-                        match.playerOneScore > match.playerTwoScore
-                            ? this.state.match.playerOneName
-                            : this.state.match.playerTwoName
-                }
-            }, () => {
-                this.addGame();
-            }
-        );
-    };
-
-    componentDidMount() {
-        this.getTotalMatches();
-    }
 
     setGameInState = () => {
         this.setState(
@@ -86,13 +58,38 @@ class AddGame extends React.Component {
                     playerTwoScore: this.playerTwoScore.current.value,
                     type: "1v1",
                     matchID: this.state.match.matchID,
-                    winner: this.state.match.winner
-                }
+                    winner: this.state.match.winner,
+                },
             },
             () => {
                 this.setWinner(this.state.match);
             }
         );
+    };
+
+    setWinner = (match) => {
+        this.setState(
+            {
+                match: {
+                    ...this.state.match,
+                    winner:
+                        match.playerOneScore > match.playerTwoScore
+                            ? this.state.match.playerOneName
+                            : this.state.match.playerTwoName,
+                },
+            },
+            () => {
+                this.addGame();
+            }
+        );
+    };
+
+    addGame = () => {
+        const match = this.state.match;
+        const matchTime = Date.now();
+        const matchesRef = firebase.database().ref("matches");
+        matchesRef.child(matchTime).set(match);
+        this.getTotalMatches();
     };
 
     render() {
