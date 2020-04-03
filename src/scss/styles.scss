@@ -1,0 +1,50 @@
+// import using ~
+@import "./_vars.scss";
+
+
+//import reset styles
+@import "./_normalize.css";
+
+/*
+Import what you need from Bulma, you can start import with ~
+because CRA knows to look in the node_modules folder
+*/
+@import "~bulma/sass/utilities/_all.sass";
+@import "~bulma/sass/base/_all.sass";
+@import "~bulma/sass/elements/button.sass";
+@import "~bulma/sass/components/level.sass";
+@import "~bulma/sass/elements/container.sass";
+@import "~bulma/sass/form/_all.sass";
+@import "~bulma/sass/grid/_all.sass";
+@import "~bulma/sass/components/card.sass";
+
+//import custom styles to override Bulma
+@import "./helpers";
+@import "./typography";
+
+
+// @media (prefers-color-scheme: dark) {
+//   body {
+//     background-color: #333;
+//     height: 100vh;
+//     width: 100%;
+//   }
+// }
+
+// @media (prefers-color-scheme: light) { 
+//     body {
+//         background-color: $secondaryColor;
+//         font-family: $font-base;
+//         height: 100vh;
+//         width: 100%;
+//     }
+// }
+
+    body {
+        background-color: $secondaryColor;
+        font-family: $font-base;
+        height: 100vh;
+        width: 100%;
+    }
+
+

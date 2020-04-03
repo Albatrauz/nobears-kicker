@@ -1,0 +1,17 @@
+//Custom font 
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;800&display=swap');
+
+//Set font-family to variable
+$font-base: 'Sen', sans-serif;
+
+$primaryColor: #101131;
+$secondaryColor: #35CBBF;
+
+$primary: $primaryColor;
+$secondary: $secondaryColor;
+$family-monospace: $font-base;
+
+.button {
+    font-family: $font-base;
+    color: $secondaryColor;
+}
